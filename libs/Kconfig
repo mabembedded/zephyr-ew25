@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT License
+
+menu "Custom libraries"
+
+rsource "common/Kconfig"
+
+endmenu

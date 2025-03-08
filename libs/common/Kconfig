@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT License
+
+config FW_SHELL
+	bool "Enable FW shell"
+	depends on SHELL=y
+	default SHELL
+	select LOG_OUTPUT
+	help
+		Enable the firmware shell
+		depends on SOS_SHELL=y
+		default SOS_SHELL
+		help
+			Enable LED shell commmands
