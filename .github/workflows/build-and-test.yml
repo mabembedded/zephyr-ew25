@@ -37,4 +37,30 @@ jobs:
         run: |
           west twister -WT tests -v --inline-logs
           cp twister-out/twister* ../zephyr-ew25-${{ github.ref_name }}
-          ls -l ../zephyr-ew25-${{ github.ref_name }}
+
+      - name: Coalesce artifacts into tarball
+        run: |
+          tar cf zephyr-ew25-${{ github.ref_name }}.tar zephyr-ew25-${{ github.ref_name }}
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: zephyr-ew25-${{ github.ref_name }}
+          body: Latest FW release
+          draft: false
+          prerelease: false
+
+      - name: Upload release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: zephyr-ew25-${{ github.ref_name }}.tar
+          asset_name: zephyr-ew25-${{ github.ref_name }}.tar
+          asset_content_type: application/x-tar
