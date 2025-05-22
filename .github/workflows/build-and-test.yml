@@ -25,3 +25,9 @@ jobs:
         run: |
           west build -p -b nrf52840dk/nrf52840 zephyr-ew25/app
 
+      - name: Twister Tests
+        working-directory: zephyr-ew25
+        shell: bash
+        run: |
+          west twister -WT tests -v --inline-logs
+          tree -L 3
