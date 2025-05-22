@@ -24,14 +24,12 @@ jobs:
       - name: Create final artifact build directory
         run: |
             mkdir zephyr-ew25-${{ github.ref_name }}
-            pwd
-            ls -l
 
       - name: Build
         working-directory: zephyr-ew25
         run: |
           west build -p -b nrf52840dk/nrf52840 app
-          cp -r build/* ../zephyr-ew25-${{ github.ref_name }}
+          cp -r build/zephyr/* ../zephyr-ew25-${{ github.ref_name }}
 
       - name: Twister Tests
         working-directory: zephyr-ew25
